@@ -13,4 +13,10 @@
   - php artisan migrate
 - Adjust the models with relationships
 	- Place the models code here
-
+- Play with Tinker
+	- Create one seller
+	- Create some sales with seller_id pointing to the seller created before
+	- >>> $one_seller = Seller::first()
+	- >>> $one_seller->sales
+	- >>> $sales = Sale::all()
+	- >>> $sales[0]->seller->name
