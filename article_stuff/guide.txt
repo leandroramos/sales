@@ -20,3 +20,10 @@
 	- >>> $one_seller->sales
 	- >>> $sales = Sale::all()
 	- >>> $sales[0]->seller->name
+
+  =======================================================================
+
+  - Seeding and factoring
+    - Create factories
+      - Place code here
+    - Update DatabaseSeeder.php
