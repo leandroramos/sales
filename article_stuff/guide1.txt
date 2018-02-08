@@ -1,0 +1,29 @@
+- Create a Laravel project
+  - composer create-project laravel/laravel sales --prefer-dist
+- Create a database (MySQL or whatever)
+  - mysql -u root -p
+    - password: ******
+    - create database sales;
+- Create models
+  - php artisan make:model Seller -crmf
+  - php artisan make:model Sale -crmf
+- Adjust the migrations
+  - Show migrations code
+- Migrate database
+  - php artisan migrate
+- Adjust the models with relationships
+	- Place the models code here
+- Play with Tinker
+	- Create one seller
+	- Create some sales with seller_id pointing to the seller created before
+	- >>> $one_seller = Seller::first()
+	- >>> $one_seller->sales
+	- >>> $sales = Sale::all()
+	- >>> $sales[0]->seller->name
+
+  =======================================================================
+
+  - Seeding and factoring
+    - Create factories
+      - Place code here
+    - Update DatabaseSeeder.php
