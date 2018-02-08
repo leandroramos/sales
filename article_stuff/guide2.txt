@@ -10,42 +10,6 @@
             $table->timestamps();
         });
     }
-- Create migration to add customer_id to sales table
-  - php artisan make:migration add_customer_id_to_sales_table --table=sales
-    - <?php
-
-      use Illuminate\Support\Facades\Schema;
-      use Illuminate\Database\Schema\Blueprint;
-      use Illuminate\Database\Migrations\Migration;
-
-      class AddCustomerIdToSalesTable extends Migration
-      {
-          /**
-           * Run the migrations.
-           *
-           * @return void
-           */
-          public function up()
-          {
-              Schema::table('sales', function (Blueprint $table) {
-                  $table->integer('customer_id')->unsigned();
-
-                  $table->foreign('customer_id')->references('id')->on('customers');
-              });
-          }
-
-          /**
-           * Reverse the migrations.
-           *
-           * @return void
-           */
-          public function down()
-          {
-              Schema::table('sales', function (Blueprint $table) {
-                  Schema::dropColumn('customer_id');
-              });
-          }
-      }
 - Remove onDelete('cascade') from sales table down function
 - Adjust Customer model
   - Add hasOne sale relationship
@@ -63,7 +27,16 @@
           public function seller()
           {
             return $this->belongsTo('App\Seller');
-            return $this->belongsTo('App\Customer');
+            return $this->hasOne('App\Customer');
+          }
+      }
+- Adjust Customer model
+  - Add belongsTo sale
+    - class Customer extends Model
+      {
+          public function sale()
+          {
+            return $this->belongsTo('App\Sale');
           }
       }
 - Run the migrations
@@ -71,4 +44,9 @@
 
 =====================================================================================
 - Adjust the factories
-  - 
+  - SellerFactory code
+  - CustomerFactory code
+  - SaleFactory code
+  - DatabaseSeeder code
+- Run seeder
+  - php artisan db:seed

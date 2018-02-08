@@ -8,6 +8,6 @@ class Customer extends Model
 {
     public function sale()
     {
-    	return $this->hasOne(App\Sale);
+    	return $this->belongsTo('App\Sale');
     }
 }

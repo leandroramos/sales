@@ -9,6 +9,6 @@ class Sale extends Model
     public function seller()
     {
     	return $this->belongsTo('App\Seller');
-    	return $this->belongsTo('App\Customer');
+    	return $this->hasOne('App\Customer');
     }
 }
