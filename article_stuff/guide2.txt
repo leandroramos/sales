@@ -1,0 +1,74 @@
+- Create Customer model
+  - php artisan make:model Customer -crmf
+- Adjust migration for customers table
+  - public function up()
+    {
+        Schema::create('customers', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->string('email');
+            $table->timestamps();
+        });
+    }
+- Create migration to add customer_id to sales table
+  - php artisan make:migration add_customer_id_to_sales_table --table=sales
+    - <?php
+
+      use Illuminate\Support\Facades\Schema;
+      use Illuminate\Database\Schema\Blueprint;
+      use Illuminate\Database\Migrations\Migration;
+
+      class AddCustomerIdToSalesTable extends Migration
+      {
+          /**
+           * Run the migrations.
+           *
+           * @return void
+           */
+          public function up()
+          {
+              Schema::table('sales', function (Blueprint $table) {
+                  $table->integer('customer_id')->unsigned();
+
+                  $table->foreign('customer_id')->references('id')->on('customers');
+              });
+          }
+
+          /**
+           * Reverse the migrations.
+           *
+           * @return void
+           */
+          public function down()
+          {
+              Schema::table('sales', function (Blueprint $table) {
+                  Schema::dropColumn('customer_id');
+              });
+          }
+      }
+- Remove onDelete('cascade') from sales table down function
+- Adjust Customer model
+  - Add hasOne sale relationship
+    - class Customer extends Model
+      {
+          public function sale()
+          {
+            return $this->hasOne(App\Sale);
+          }
+      }
+- Adjust Sale model
+  - Add belongsTo customer
+    - class Sale extends Model
+      {
+          public function seller()
+          {
+            return $this->belongsTo('App\Seller');
+            return $this->belongsTo('App\Customer');
+          }
+      }
+- Run the migrations
+  - php artisan migrate
+
+=====================================================================================
+- Adjust the factories
+  - 
